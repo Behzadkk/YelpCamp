@@ -7,44 +7,47 @@ let campgrounds = [
   {
     name: "Salmon Greek",
     image:
-      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144497f9c071a7eab1_340.jpg"
+      "https://pixabay.com/get/e837b1072af4003ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Ouramanat",
     image:
-      "https://pixabay.com/get/e83db40e28fd033ed1584d05fb1d4e97e07ee3d21cac104490f2c878afedb2bc_340.jpg"
+      "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Saint Hills",
-    image: "https://farm7.staticflickr.com/6054/6335614644_f4cbf11d08.jpg"
+    image:
+      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144496f2c171a0eeb6_340.jpg"
   },
   {
     name: "Salmon Greek",
     image:
-      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144497f9c071a7eab1_340.jpg"
+      "https://pixabay.com/get/e837b1072af4003ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Ouramanat",
     image:
-      "https://pixabay.com/get/e83db40e28fd033ed1584d05fb1d4e97e07ee3d21cac104490f2c878afedb2bc_340.jpg"
+      "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Saint Hills",
-    image: "https://farm7.staticflickr.com/6054/6335614644_f4cbf11d08.jpg"
+    image:
+      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144496f2c171a0eeb6_340.jpg"
   },
   {
     name: "Salmon Greek",
     image:
-      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144497f9c071a7eab1_340.jpg"
+      "https://pixabay.com/get/e837b1072af4003ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Ouramanat",
     image:
-      "https://pixabay.com/get/e83db40e28fd033ed1584d05fb1d4e97e07ee3d21cac104490f2c878afedb2bc_340.jpg"
+      "https://pixabay.com/get/e83db50929f0033ed1584d05fb1d4e97e07ee3d21cac104490f3c379afeab6bb_340.jpg"
   },
   {
     name: "Saint Hills",
-    image: "https://farm7.staticflickr.com/6054/6335614644_f4cbf11d08.jpg"
+    image:
+      "https://pixabay.com/get/ef3cb00b2af01c22d2524518b7444795ea76e5d004b0144496f2c171a0eeb6_340.jpg"
   }
 ];
 

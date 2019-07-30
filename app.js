@@ -14,7 +14,8 @@ app.set("view engine", "ejs");
 // SCHEMA SETUP
 const campgroundShema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  description: String
 });
 
 const Campground = mongoose.model("Campground", campgroundShema);
@@ -23,7 +24,9 @@ const Campground = mongoose.model("Campground", campgroundShema);
 //   {
 //     name: "Ouramanat",
 //     image:
-//       "https://cdn.pixabay.com/photo/2016/06/06/08/32/tent-1439061_960_720.jpg"
+//       "https://cdn.pixabay.com/photo/2016/06/06/08/32/tent-1439061_960_720.jpg",
+//     description:
+//       " This is Ouramanat campground. It's very lovelt place for you and your family"
 //   },
 //   function(err, campground) {
 //     if (err) {
@@ -45,7 +48,7 @@ app.get("/campgrounds", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render("campground", { campgrounds: allCampgrounds });
+      res.render("index", { campgrounds: allCampgrounds });
     }
   });
 });
@@ -53,7 +56,8 @@ app.get("/campgrounds", function(req, res) {
 app.post("/campgrounds", function(req, res) {
   const name = req.body.name;
   const image = req.body.image;
-  const newCampground = { name: name, image: image };
+  const description = req.body.description;
+  const newCampground = { name: name, image: image, description: description };
   Campground.create(newCampground, function(err, newlyCreated) {
     if (err) {
       console.log(err);
@@ -65,6 +69,16 @@ app.post("/campgrounds", function(req, res) {
 
 app.get("/campgrounds/new", function(req, res) {
   res.render("new");
+});
+
+app.get("/campgrounds/:id", function(req, res) {
+  Campground.findById(req.params.id, function(err, foundCampground) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("show", { campground: foundCampground });
+    }
+  });
 });
 app.listen(port, function() {
   console.log("The YelpCamp server has started");

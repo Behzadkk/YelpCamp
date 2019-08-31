@@ -3,41 +3,15 @@ const app = express();
 const bodyParser = require("body-parser");
 const port = process.env.port || 3030;
 const mongoose = require("mongoose");
+const Campground = require("./models/campground");
+const seedDB = require("./seeds");
 
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {
   useNewUrlParser: true
 });
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
-// SCHEMA SETUP
-const campgroundShema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
-
-const Campground = mongoose.model("Campground", campgroundShema);
-
-// Campground.create(
-//   {
-//     name: "Ouramanat",
-//     image:
-//       "https://cdn.pixabay.com/photo/2016/06/06/08/32/tent-1439061_960_720.jpg",
-//     description:
-//       " This is Ouramanat campground. It's very lovelt place for you and your family"
-//   },
-//   function(err, campground) {
-//     if (err) {
-//       console.log("OH, ERROR!!!");
-//       console.log(err);
-//     } else {
-//       console.log("NEWLY CREATED CAMPGROUND");
-//       console.log(campground);
-//     }
-//   }
-// );
+seedDB();
 
 app.get("/", function(req, res) {
   res.render("landing");
@@ -72,13 +46,16 @@ app.get("/campgrounds/new", function(req, res) {
 });
 
 app.get("/campgrounds/:id", function(req, res) {
-  Campground.findById(req.params.id, function(err, foundCampground) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.render("show", { campground: foundCampground });
-    }
-  });
+  Campground.findById(req.params.id)
+    .populate("comments")
+    .exec(function(err, foundCampground) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(foundCampground);
+        res.render("show", { campground: foundCampground });
+      }
+    });
 });
 app.listen(port, function() {
   console.log("The YelpCamp server has started");

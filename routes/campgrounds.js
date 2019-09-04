@@ -4,14 +4,16 @@ const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const middleware = require("../middleware");
 
-// INDEX - Show All Campgrounds
+//INDEX - show all campgrounds
 router.get("/", function(req, res) {
+  // Get all campgrounds from DB
   Campground.find({}, function(err, allCampgrounds) {
     if (err) {
       console.log(err);
     } else {
       res.render("campgrounds/index", {
-        campgrounds: allCampgrounds
+        campgrounds: allCampgrounds,
+        page: "campgrounds"
       });
     }
   });
@@ -20,6 +22,7 @@ router.get("/", function(req, res) {
 // CREATE - Add New Campground to DB
 router.post("/", middleware.isLoggedIn, function(req, res) {
   const name = req.body.name;
+  const price = req.body.price;
   const image = req.body.image;
   const description = req.body.description;
   const author = {
@@ -28,6 +31,7 @@ router.post("/", middleware.isLoggedIn, function(req, res) {
   };
   const newCampground = {
     name: name,
+    price: price,
     image: image,
     description: description,
     author: author

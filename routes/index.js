@@ -8,9 +8,9 @@ router.get("/", function(req, res) {
   res.render("landing");
 });
 
-// Show Register Form
+// show register form
 router.get("/register", function(req, res) {
-  res.render("register");
+  res.render("register", { page: "register" });
 });
 
 // Handling Sign Up Logic
@@ -18,19 +18,19 @@ router.post("/register", function(req, res) {
   const newUser = new User({ username: req.body.username });
   User.register(newUser, req.body.password, function(err, user) {
     if (err) {
-      req.flash("error", err.message);
-      return res.render("register");
+      console.log(err);
+      return res.render("register", { error: err.message });
     }
     passport.authenticate("local")(req, res, function() {
-      req.flash("success", "Welcome to YelpCamp" + user.username);
+      req.flash("success", "Welcome to YelpCamp " + user.username);
       res.redirect("/campgrounds");
     });
   });
 });
 
-// Show Login Form
+//show login form
 router.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login", { page: "login" });
 });
 
 // Handling Login Logic

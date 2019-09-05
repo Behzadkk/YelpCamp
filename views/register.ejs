@@ -8,7 +8,7 @@
           class="form-control"
           type="text"
           name="username"
-          placeholder="username"
+          placeholder="Username"
         />
       </div>
       <div class="form-group">
@@ -16,7 +16,28 @@
           class="form-control"
           type="password"
           name="password"
-          placeholder="password"
+          placeholder="Password"
+        />
+      </div>
+      <div class="custom-control custom-checkbox">
+        <input
+          type="checkbox"
+          class="custom-control-input"
+          id="adminCheck"
+          onclick="show()"
+        />
+        <label class="custom-control-label" for="adminCheck"
+          >I am an admin</label
+        >
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="password"
+          id="adminCode"
+          name="adminCode"
+          placeholder="Admin Code"
+          style="display: none;"
         />
       </div>
       <div class="form-group">
@@ -26,4 +47,19 @@
     <a href="/campgrounds">Go Back</a>
   </div>
 </div>
+<script>
+  function show() {
+    // Get the checkbox
+    var adminCheck = document.getElementById("adminCheck");
+    // Get the output text
+    var adminCode = document.getElementById("adminCode");
+
+    // If the checkbox is checked, display the output text
+    if (adminCheck.checked == true) {
+      adminCode.style.display = "block";
+    } else {
+      adminCode.style.display = "none";
+    }
+  }
+</script>
 <% include ./partials/footer %>

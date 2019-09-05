@@ -19,8 +19,10 @@
         <p><%= campground.description %></p>
         <p>
           <em
-            >Submitted by: <%= campground.author.username %>, <%=
-            moment(campground.createdAt).fromNow() %></em
+            >Submitted by:
+            <a href="/users/<%= campground.author.id %>"
+              ><%= campground.author.username %></a
+            >, <%= moment(campground.createdAt).fromNow() %></em
           >
         </p>
         <%if(currentUser && campground.author.id.equals(currentUser._id) ||
@@ -108,7 +110,7 @@
 <script
   async
   defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDSzwcrj80WWZ-5sGGPbM3EYwouIjLHM7g&callback=initMap"
+  src="https://maps.googleapis.com/maps/api/js?key=<%=process.env.LOCAL_SRC_KEY%>&callback=initMap"
 ></script>
 
 <% include ../partials/footer %>

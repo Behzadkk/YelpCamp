@@ -1,67 +1,83 @@
 <% include ../partials/header %>
-<div class="row">
-  <h1 style="text-align: center">Edit <%= campground.name %></h1>
-  <div style="width: 30%; margin: 25px auto;">
+<div class="row justify-content-center my-5">
+  <div class="col-md-12 text-center">
+    <h1 class="h3 mb-3 font-weight-normal">Edit <%= campground.name %></h1>
+  </div>
+  <div class="col-md-8">
     <form
       action="/campgrounds/<%=campground._id%>?_method=PUT"
       method="POST"
       enctype="multipart/form-data"
     >
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input
-          class="form-control"
-          type="text"
-          name="name"
-          id="name"
-          value="<%= campground.name %>"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="name">Name</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="name"
+            id="name"
+            value="<%= campground.name %>"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="image">Image URL</label>
-        <input
-          class="form-control-file"
-          type="file"
-          id="image"
-          name="image"
-          accept="image/*"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="price">Price</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="number"
+            name="price"
+            id="price"
+            value="<%= campground.price %>"
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="price">Price</label>
-        <input
-          class="form-control"
-          type="number"
-          name="price"
-          id="price"
-          value="<%= campground.price %>"
-          step="0.01"
-          min="0"
-          required
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="location">Location</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="location"
+            id="location"
+            value="<%= campground.location %>"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="location">Location</label>
-        <input
-          class="form-control"
-          type="text"
-          name="location"
-          id="location"
-          value="<%= campground.location %>"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="description">Description</label>
+        <div class="col-sm-9">
+          <textarea class="form-control" rows="4"
+            cols="50" name="description" id="description"><%= campground.description %></textarea>
+          <!-- <input
+            class="form-control"
+            type="text"
+            name="description"
+            id="description"
+            value="<%= campground.description %>"
+          /> -->
+        </div>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <input
-          class="form-control"
-          type="text"
-          name="description"
-          id="description"
-          value="<%= campground.description %>"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="image">Image URL</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control-file"
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-lg btn-primary btn-block">Update!</button>
+      <div class="form-group row justify-content-end mt-5 mt-sm-0">
+        <div class="col-sm-9">
+          <button class="btn btn-lg btn-primary btn-block">Update!</button>
+        </div>
       </div>
     </form>
     <a href="/campgrounds">Go Back</a>

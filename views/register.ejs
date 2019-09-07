@@ -1,80 +1,102 @@
 <% include ./partials/header %>
-<div class="row">
-  <h1 style="text-align: center">Sign Up</h1>
-  <div style="width: 30%; margin: 25px auto;">
+<div class="row justify-content-center my-5">
+  <div class="col-md-12 text-center">
+    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+  </div>
+  <div class="col-md-8">
     <form action="/register" method="post">
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          name="username"
-          placeholder="Username"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="username">Username</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="username"
+            id="username"
+            placeholder="JohnDoe"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="password"
-          name="password"
-          placeholder="Password"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="password">Password</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="password"
+            name="password"
+            id="password"
+            placeholder="******"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="firstName">First Name</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="firstName"
+            id="firstName"
+            placeholder="John"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="lasttName">Last Name</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="lastName"
+            id="lastName"
+            placeholder="Doe"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="email"
-          name="email"
-          placeholder="email"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="email">Email</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="email"
+            name="email"
+            id="email"
+            placeholder="johndoe@example.com"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="text"
-          name="avatar"
-          placeholder="Avatar URL"
-        />
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="avatar">Avatar</label>
+        <div class="col-sm-9">
+          <input
+            class="form-control"
+            type="text"
+            name="avatar"
+            id="avatar"
+            placeholder="Avatar URL"
+          />
+        </div>
       </div>
-      <div class="custom-control custom-checkbox">
-        <input
-          type="checkbox"
-          class="custom-control-input"
-          id="adminCheck"
-          onclick="show()"
-        />
-        <label class="custom-control-label" for="adminCheck"
-          >I am an admin</label
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3 d-none" id="adminLable" for="adminCode"
+          >Admin code</label
         >
+        <div class="col-sm-9">
+          <input
+            class="form-control d-none"
+            type="password"
+            id="adminCode"
+            name="adminCode"
+            placeholder="Please inser the secret key"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <input
-          class="form-control"
-          type="password"
-          id="adminCode"
-          name="adminCode"
-          placeholder="Admin Code"
-          style="display: none;"
-        />
+      <div class="form-group row justify-content-end mt-5 mt-sm-0">
+        <div class="col-sm-9">
+          <button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
+        </div>
       </div>
-      <div class="form-group">
-        <button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
-      </div>
+      <a href="#" id="adminCheck" onclick="show()">I am an admin</a>
     </form>
     <a href="/campgrounds">Go Back</a>
   </div>
@@ -83,14 +105,16 @@
   function show() {
     // Get the checkbox
     var adminCheck = document.getElementById("adminCheck");
+    var adminLable = document.getElementById("adminLable");
     // Get the output text
     var adminCode = document.getElementById("adminCode");
 
-    // If the checkbox is checked, display the output text
-    if (adminCheck.checked == true) {
-      adminCode.style.display = "block";
+    adminCode.classList.toggle("d-none");
+    adminLable.classList.toggle("d-none");
+    if (adminCheck.innerText === "I am an admin") {
+      adminCheck.innerText = "I am NOT an admin";
     } else {
-      adminCode.style.display = "none";
+      adminCheck.innerText = "I am an admin";
     }
   }
 </script>

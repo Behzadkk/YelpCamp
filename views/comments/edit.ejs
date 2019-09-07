@@ -1,25 +1,40 @@
 <% include ../partials/header %>
 
-<div class="row">
-  <h1 style="text-align:center">Edit Comment</h1>
-  <div style="width: 30%; margin: 25px auto;">
+<div class="row justify-content-center my-5">
+  <div class="col-md-12 text-center">
+    <h1 class="h3 mb-3 font-weight-normal">Edit Comment</h1>
+  </div>
+  <div class="col-md-8">
     <form
       action="/campgrounds/<%= campground_id%>/comments/<%= comment._id%>?_method=PUT"
       method="POST"
     >
-      <div class="form-group">
-        <input
+      <div class="form-group row justify-content-between">
+        <label class="my-2 mx-3" for="comment">Comment</label>
+        <div class="col-sm-9">
+          <textarea
+            class="form-control"
+            rows="4"
+            cols="50"
+            name="description"
+            id="description"
+          ><%= comment.text %></textarea
+          >
+        </div>
+        <!-- <input
           class="form-control"
           type="text"
           name="comment[text]"
           value="<%= comment.text %>"
-        />
+        /> -->
       </div>
-      <div class="form-group">
-        <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+      <div class="form-group row justify-content-end mt-5 mt-sm-0">
+        <div class="col-sm-9">
+          <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+        </div>
       </div>
     </form>
-    <a href="/campgrounds">GO Back</a>
+    <a href="/campgrounds">Go Back</a>
   </div>
 </div>
 

@@ -65,7 +65,7 @@ app.use(async function(req, res, next) {
 // Requiring Routes
 app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
-app.use("/campgrounds/:id/comments", commentRoutes);
+app.use("/campgrounds/:slug/comments", commentRoutes);
 
 app.listen(port, function() {
   console.log("The YelpCamp server has started");

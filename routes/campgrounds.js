@@ -90,7 +90,6 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
 
   geocoder.geocode(req.body.location, function(err, data) {
     if (err || !data.length) {
-      console.log(data);
       console.log(err);
       req.flash("error", "Invalid address");
       return res.redirect("back");
@@ -118,7 +117,7 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
           .exec();
         let newNotification = {
           username: req.user.username,
-          campgroundId: campground.id
+          campgroundSlug: campground.slug
         };
         for (const follower of user.followers) {
           let notification = await Notification.create(newNotification);
@@ -127,8 +126,9 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
         }
 
         //redirect back to campgrounds page
-        res.redirect(`/campgrounds/${campground.id}`);
+        res.redirect(`/campgrounds/${campground.slug}`);
       } catch (err) {
+        console.log(err);
         req.flash("error", err.message);
         res.redirect("back");
       }
@@ -142,8 +142,8 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 });
 
 // SHOW - shows more info about one campground
-router.get("/:id", function(req, res) {
-  Campground.findById(req.params.id)
+router.get("/:slug", function(req, res) {
+  Campground.findOne({ slug: req.params.slug })
     .populate("comments")
     .exec(function(err, foundCampground) {
       if (err || !foundCampground) {
@@ -156,22 +156,25 @@ router.get("/:id", function(req, res) {
     });
 });
 // EDIT campground route
-router.get("/:id/edit", middleware.checkCampgroundOwnership, function(
+router.get("/:slug/edit", middleware.checkCampgroundOwnership, function(
   req,
   res
 ) {
-  Campground.findById(req.params.id, function(err, foundCampground) {
+  Campground.findOne({ slug: req.params.slug }, function(err, foundCampground) {
     res.render("campgrounds/edit", { campground: foundCampground });
   });
 });
 
 // UPDATE CAMPGROUND ROUTE
 router.put(
-  "/:id",
+  "/:slug",
   middleware.checkCampgroundOwnership,
   upload.single("image"),
   function(req, res) {
-    Campground.findById(req.params.id, async function(err, campground) {
+    Campground.findOne({ slug: req.params.slug }, async function(
+      err,
+      campground
+    ) {
       if (err) {
         req.flash("error", err.message);
         res.redirect("back");
@@ -198,17 +201,29 @@ router.put(
         campground.name = req.body.name;
         campground.price = req.body.price;
         campground.description = req.body.description;
-        campground.save();
-        req.flash("success", "Successfully Updated!");
-        res.redirect("/campgrounds/" + campground._id);
+        campground.save(function(err) {
+          if (err) {
+            req.flash("error", err.message);
+            res.redirect("back");
+          } else {
+            req.flash("success", "Successfully Updated!");
+            res.redirect("/campgrounds/" + campground.slug);
+          }
+        });
       }
     });
   }
 );
 
 // DESTROY campground route
-router.delete("/:id", middleware.checkCampgroundOwnership, function(req, res) {
-  Campground.findById(req.params.id, async function(err, campground) {
+router.delete("/:slug", middleware.checkCampgroundOwnership, function(
+  req,
+  res
+) {
+  Campground.findOne({ slug: req.params.slug }, async function(
+    err,
+    campground
+  ) {
     if (err) {
       req.flash("error", err.message);
       return res.redirect("back");

@@ -38,12 +38,12 @@
               || currentUser && currentUser.isAdmin){%>
               <a
                 class="btn btn-sm btn-warning"
-                href="/campgrounds/<%=campground._id %>/edit"
+                href="/campgrounds/<%=campground.slug %>/edit"
                 >Edit</a
               >
               <form
                 class="delete-form"
-                action="/campgrounds/<%=campground._id %>?_method=DELETE"
+                action="/campgrounds/<%=campground.slug %>?_method=DELETE"
                 method="POST"
               >
                 <button class="btn btn-sm btn-danger">Delete</button>
@@ -70,7 +70,7 @@
         <h5>Reviews</h5>
         <a
           class="btn btn-success"
-          href="/campgrounds/<%=campground._id %>/comments/new"
+          href="/campgrounds/<%=campground.slug %>/comments/new"
           >Add New Comment</a
         >
       </div>
@@ -90,12 +90,12 @@
             <div class="text-right">
               <a
                 class="btn btn-sm btn-warning"
-                href="/campgrounds/<%=campground._id %>/comments/<%=comment._id%>/edit"
+                href="/campgrounds/<%=campground.slug %>/comments/<%=comment._id%>/edit"
                 >Edit</a
               >
               <form
                 class="delete-form"
-                action="/campgrounds/<%=campground._id %>/comments/<%=comment._id%>?_method=DELETE"
+                action="/campgrounds/<%=campground.slug %>/comments/<%=comment._id%>?_method=DELETE"
                 method="POST"
               >
                 <input

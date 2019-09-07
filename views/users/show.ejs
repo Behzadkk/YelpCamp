@@ -6,7 +6,11 @@
     <div class="thumbnail">
       <img src="<%= user.avatar %>" alt="user profile avatar" />
       <div class="caption">
-        <a href="mailto:<%=user.email%>"><%=user.email%></a>
+        <a href="/follow/<%= user.id %>"
+          ><button class="btn btn-primary">
+            Follow <%= user.username %>
+          </button></a
+        >
       </div>
     </div>
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

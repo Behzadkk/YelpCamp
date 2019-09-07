@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const Campground = require("../models/campground");
 const Comment = require("../models/comment");
+const User = require("../models/user");
+const Notification = require("../models/notification");
 const middleware = require("../middleware");
 const NodeGeocoder = require("node-geocoder");
 var cloudinary = require("cloudinary").v2;
@@ -94,7 +96,7 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
       return res.redirect("back");
     }
     // secure url for uploaded image
-    cloudinary.uploader.upload(req.file.path, function(err, result) {
+    cloudinary.uploader.upload(req.file.path, async function(err, result) {
       const lat = data[0].latitude;
       const lng = data[0].longitude;
       const location = data[0].formattedAddress;
@@ -109,18 +111,27 @@ router.post("/", middleware.isLoggedIn, upload.single("image"), function(
       };
       newCampground.image = result.secure_url;
       newCampground.imageId = result.public_id;
-
-      // Create a new campground and save to DB
-      Campground.create(newCampground, function(err, newlyCreated) {
-        if (err) {
-          req.flash("error", err.message);
-          return res.redirect("back");
-        } else {
-          //redirect back to campgrounds page
-          console.log(newlyCreated);
-          res.redirect("/campgrounds/" + newlyCreated.id);
+      try {
+        let campground = await Campground.create(newCampground);
+        let user = await User.findById(req.user._id)
+          .populate("followers")
+          .exec();
+        let newNotification = {
+          username: req.user.username,
+          campgroundId: campground.id
+        };
+        for (const follower of user.followers) {
+          let notification = await Notification.create(newNotification);
+          follower.notifications.push(notification);
+          follower.save();
         }
-      });
+
+        //redirect back to campgrounds page
+        res.redirect(`/campgrounds/${campground.id}`);
+      } catch (err) {
+        req.flash("error", err.message);
+        res.redirect("back");
+      }
     });
   });
 });

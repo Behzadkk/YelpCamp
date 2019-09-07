@@ -69,21 +69,45 @@
             >
               <a class="nav-link" href="/register">Sign Up</a>
             </li>
-            <% } else { %>
-            <li class="nav-item">
-              <a class="nav-link" href="#"
-                >Signed In As <%= currentUser.username %></a
+            <% } else { %> <%if(notifications){%>
+            <li class="nav-item dropdown">
+              <a
+                href="#"
+                class="nav-link dropdown-toggle small"
+                data-toggle="dropdown"
+                role="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                >Signed in as <%= currentUser.username %>
+                <span class="badge"><%= notifications.length %></span></a
               >
+              <ul class="dropdown-menu py-0">
+                <li>
+                  <a class="dropdown-item small" href="/notifications"
+                    >View past notifications</a
+                  >
+                </li>
+                <% notifications.forEach(function(notification) { %>
+                <li>
+                  <a
+                    class="dropdown-item small"
+                    href="/notifications/<%= notification.id %>"
+                  >
+                    <%= notification.username %> created a new campground
+                  </a>
+                </li>
+                <% }); %>
+              </ul>
             </li>
+            <%}%>
             <li class="nav-item">
-              <a class="nav-link" href="/logout">Logout</a>
+              <a class="nav-link small" href="/logout">Logout</a>
             </li>
             <% } %>
           </ul>
         </div>
       </div>
     </nav>
-
     <div class="container">
       <% if(error && error.length > 0){%>
       <div class="alert alert-danger" role="alert"><%= error %></div>
@@ -91,4 +115,6 @@
       <div class="alert alert-success" role="alert"><%= success %></div>
       <%}%>
     </div>
-    <div class="container">
+    <div class="container"></div>
+  </body>
+</html>

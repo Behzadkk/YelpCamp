@@ -13,6 +13,10 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    />
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
     <!-- <script src="main.js"></script> -->
   </head>
@@ -78,9 +82,14 @@
                 role="button"
                 aria-haspopup="true"
                 aria-expanded="false"
-                >Signed in as <%= currentUser.username %>
-                <span class="badge"><%= notifications.length %></span></a
-              >
+                >Signed in as <%= currentUser.username %> <% if
+                (notifications.length > 0 ) { %>
+                <span class="badge badge-light"
+                  ><%= notifications.length %></span
+                >
+                <% } %>
+              </a>
+
               <ul class="dropdown-menu py-0">
                 <li>
                   <a class="dropdown-item small" href="/notifications"

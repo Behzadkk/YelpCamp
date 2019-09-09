@@ -32,7 +32,13 @@ const campgroundSchema = new mongoose.Schema({
   slug: {
     type: String,
     unique: true
-  }
+  },
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    }
+  ]
 });
 
 // add a slug before the campground gets saved to the database

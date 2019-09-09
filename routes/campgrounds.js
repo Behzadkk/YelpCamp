@@ -144,7 +144,7 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 // SHOW - shows more info about one campground
 router.get("/:slug", function(req, res) {
   Campground.findOne({ slug: req.params.slug })
-    .populate("comments")
+    .populate("comments likes")
     .exec(function(err, foundCampground) {
       if (err || !foundCampground) {
         req.flash("error", "Campground not found");
@@ -240,6 +240,37 @@ router.delete("/:slug", middleware.checkCampgroundOwnership, function(
         return res.redirect("back");
       }
     }
+  });
+});
+
+// Campground Like Route
+router.post("/:slug/like", middleware.isLoggedIn, function(req, res) {
+  Campground.findOne({ slug: req.params.slug }, function(err, foundCampground) {
+    if (err) {
+      console.log(err);
+      return res.redirect("/campgrounds");
+    }
+
+    // check if req.user._id exists in foundCampground.likes
+    var foundUserLike = foundCampground.likes.some(function(like) {
+      return like.equals(req.user._id);
+    });
+
+    if (foundUserLike) {
+      // user already liked, removing like
+      foundCampground.likes.pull(req.user._id);
+    } else {
+      // adding the new user like
+      foundCampground.likes.push(req.user);
+    }
+
+    foundCampground.save(function(err) {
+      if (err) {
+        console.log(err);
+        return res.redirect("/campgrounds");
+      }
+      return res.redirect("/campgrounds/" + foundCampground.slug);
+    });
   });
 });
 

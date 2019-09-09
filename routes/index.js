@@ -293,7 +293,7 @@ router.get("/notifications/:id", middleware.isLoggedIn, async function(
     let notification = await Notification.findById(req.params.id);
     notification.isRead = true;
     notification.save();
-    res.redirect(`/campgrounds/${notification.campgroundId}`);
+    res.redirect(`/campgrounds/${notification.campgroundSlug}`);
   } catch (err) {
     req.flash("error", err.message);
     res.redirect("back");

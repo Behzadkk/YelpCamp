@@ -4,6 +4,7 @@ const Campground = require("../models/campground");
 const Comment = require("../models/comment");
 const User = require("../models/user");
 const Notification = require("../models/notification");
+const Review = require("../models/review");
 const middleware = require("../middleware");
 const NodeGeocoder = require("node-geocoder");
 var cloudinary = require("cloudinary").v2;
@@ -145,6 +146,10 @@ router.get("/new", middleware.isLoggedIn, function(req, res) {
 router.get("/:slug", function(req, res) {
   Campground.findOne({ slug: req.params.slug })
     .populate("comments likes")
+    .populate({
+      path: "reviews",
+      options: { sort: { createdAt: -1 } }
+    })
     .exec(function(err, foundCampground) {
       if (err || !foundCampground) {
         req.flash("error", "Campground not found");
@@ -190,14 +195,16 @@ router.put(
             return res.redirect("back");
           }
         }
-        const data = await geocoder.geocode(req.body.location);
-        if (!data.length) {
-          req.flash("error", "Invalid address");
-          return res.redirect("back");
+        if (req.body.location !== campground.location) {
+          const data = await geocoder.geocode(req.body.location);
+          if (!data.length) {
+            req.flash("error", "Invalid address");
+            return res.redirect("back");
+          }
+          campground.lat = data[0].latitude;
+          campground.lng = data[0].longitude;
+          campground.location = data[0].formattedAddress;
         }
-        campground.lat = data[0].latitude;
-        campground.lng = data[0].longitude;
-        campground.location = data[0].formattedAddress;
         campground.name = req.body.name;
         campground.price = req.body.price;
         campground.description = req.body.description;
@@ -231,6 +238,7 @@ router.delete("/:slug", middleware.checkCampgroundOwnership, function(
     try {
       await cloudinary.uploader.destroy(campground.imageId);
       Comment.deleteMany({ _id: { $in: campground.comments } });
+      Review.deleteMany({ _id: { $in: campground.reviews } });
       campground.remove();
       req.flash("success", "Campground deleted successfully!");
       res.redirect("/campgrounds");

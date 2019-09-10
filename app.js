@@ -16,6 +16,7 @@ const seedDB = require("./seeds");
 const commentRoutes = require("./routes/comments");
 const campgroundRoutes = require("./routes/campgrounds");
 const indexRoutes = require("./routes/index");
+const reviewRoutes = require("./routes/review");
 
 mongoose.connect("mongodb://localhost:27017/yelp_camp", {
   useNewUrlParser: true
@@ -66,6 +67,7 @@ app.use(async function(req, res, next) {
 app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:slug/comments", commentRoutes);
+app.use("/campgrounds/:slug/reviews", reviewRoutes);
 
 app.listen(port, function() {
   console.log("The YelpCamp server has started");

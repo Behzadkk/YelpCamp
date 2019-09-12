@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const port = process.env.port || 3030;
+const port = process.env.PORT || 3030;
 const mongoose = require("mongoose");
 const flash = require("connect-flash");
 const passport = require("passport");

@@ -22,7 +22,7 @@ const reviewRoutes = require("./routes/review");
 //   useNewUrlParser: true
 // });
 const pass = mongoose.connect(
-  `mongodb+srv://behzad:${process.env.mongoDBPass}@yelpcamp-nvoyi.mongodb.net/test?retryWrites=true&w=majority`,
+  `mongodb+srv://behzad:${process.env.MOGODB_PASS}@yelpcamp-nvoyi.mongodb.net/test?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true
   }
